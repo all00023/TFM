@@ -72,9 +72,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\AdrianSI\OneDrive\TFM\Proyectos\Librerias;$(IncludePath)</IncludePath>
+    <SourcePath>C:\Users\AdrianSI\OneDrive\TFM\Proyectos\Librerias;$(SourcePath)</SourcePath>
+    <ReferencePath>C:\Users\AdrianSI\OneDrive\TFM\Proyectos\Librerias;$(ReferencePath)</ReferencePath>
+    <LibraryPath>C:\Users\AdrianSI\OneDrive\TFM\Proyectos\Librerias\dll;C:\Users\AdrianSI\OneDrive\TFM\Proyectos\Librerias\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\AdrianSI\OneDrive\TFM\Proyectos\Librerias;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -143,10 +148,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="lodepng.h" />
+    <ClInclude Include="punto3D.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="Segmentacion.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -154,6 +162,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SDL.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="SDL.lib" />
+    <Library Include="SDLmain.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
