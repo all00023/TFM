@@ -21,10 +21,13 @@
     <ClInclude Include="targetver.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="punto3D.h">
+    <ClInclude Include="lodepng.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="lodepng.h">
+    <ClInclude Include="Plano3D.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Punto3D.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,12 +41,5 @@
     <ClCompile Include="lodepng.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="SDL.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="SDL.lib" />
-    <Library Include="SDLmain.lib" />
   </ItemGroup>
 </Project>
