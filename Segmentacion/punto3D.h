@@ -8,6 +8,7 @@ class Punto3D{
 
 private:
 	bool valido;
+	bool normalValida;
 	float x;
 	float y;
 	float z;
@@ -20,11 +21,16 @@ private:
 	Plano3D* plano;
 
 public:
-	Punto3D(){}
+	Punto3D(){
+		plano = NULL;
+	}
 	~Punto3D(){}
 
 	bool getValido(){
 		return valido;
+	}
+	bool getNormalValida(){
+		return normalValida;
 	}
 	float getX(){
 		return x;
@@ -67,6 +73,10 @@ public:
 
 	void setValido(bool valido){
 		this->valido = valido;
+	}
+
+	void setNormalValida(bool normalValida){
+		this->normalValida = normalValida;
 	}
 
 	void setX(float x){
@@ -130,7 +140,7 @@ public:
 	}
 
 	float getDotProduct(Punto3D *punto2){
-		return abs(nx*punto2->nx + ny * punto2->ny + nz * punto2->nz);
+		return nx*punto2->nx + ny * punto2->ny + nz * punto2->nz;
 	}
 
 	float getNDMenosND(Punto3D *punto2){

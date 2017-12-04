@@ -26,19 +26,55 @@ private:
 	float cy;
 	float cz;
 
+	float depthCentro;
+
 	set<Punto3D*> puntosInternos;
 	set<Plano3D*> planosColindantes;
 
+	float divisorDistanciaPunto;
+
 public:
-	Plano3D(){
+	Plano3D(int etiqueta){
 		valido = false;
 		sumaNX = 0;
 		sumaNY = 0;
 		sumaNZ = 0;
+		this->etiqueta = etiqueta;
 	}
-	~Plano3D(){
+
+	float getEtiqueta(){
+		return etiqueta;
+	}
+
+	float getNX(){
+		return nx;
+	}
+
+	float getNY(){
+		return ny;
+	}
+
+	float getNZ(){
+		return nz;
+
+	}
+
+	float getD(){
+		return d;
+	}
+
+	float getDepthCentro(){
+		return depthCentro;
+	}
+
+	set<Plano3D*> getPlanosColindantes(){
+		return planosColindantes;
+	}
+
+	void liberarPuntos(){
 		for (set<Punto3D*>::iterator it = puntosInternos.begin(); it != puntosInternos.end(); ++it){
 			(*it)->setPlano(NULL);
+			(*it)->setEtiqueta(0);
 		}
 	}
 
@@ -54,7 +90,13 @@ public:
 		sumaZ += p->getZ();
 
 		puntosInternos.insert(p);
-		p->setPlano(const_cast<Plano3D*>(this));
+		p->setEtiqueta(etiqueta);
+
+	}
+
+	void addPlanoColindante(Plano3D *p){
+
+		planosColindantes.insert(p);
 
 	}
 
@@ -71,6 +113,10 @@ public:
 
 		d = -(cx * nx) - (cy * ny) - (cz * nz);
 
+		divisorDistanciaPunto = sqrt(nx * nx + ny * ny + nz * nz);
+
+		depthCentro = sqrt(cx * cx + cy * cy + cz * cz);
+
 	}
 
 	float moduloVectorNormal(){
@@ -85,7 +131,9 @@ public:
 
 	}
 
-	bool calcularSiValido(vector<Punto3D*> puntos, float porcentaje, float umbralConvexidad, int minPuntos, float umbralCosenoNormales){
+	bool calcularSiValido(float umbralConvexidad, int minPuntos, float umbralCosenoNormales){
+
+		valido = true;
 
 		if (puntosInternos.size() < minPuntos){
 
@@ -99,17 +147,19 @@ public:
 
 			while (it != puntosInternos.end() && noValidos < limite){
 
-				if (getDotProductPunto(*it) > umbralCosenoNormales)
+				if (getDotProductPunto(*it) < umbralCosenoNormales)
 					noValidos++;
 
 				it++;
 			}
 
-			if (noValidos>= limite){
+			if (noValidos >= limite){
 				valido = false;
 			}
 
 		}
+
+		return valido;
 	}
 
 	void combinarPlanos(Plano3D* plano2){
@@ -127,17 +177,42 @@ public:
 
 		for (set<Punto3D*>::iterator it = plano2->puntosInternos.begin(); it != plano2->puntosInternos.end(); ++it){
 			(*it)->setPlano(const_cast<Plano3D*>(this));
+			(*it)->setEtiqueta(etiqueta);
 		}
 
-		for (set<Plano3D*>::iterator it = plano2->planosColindantes.begin(); it != plano2->planosColindantes.end(); ++it){
-			(*it)->planosColindantes.erase(plano2);
-			(*it)->planosColindantes.insert(const_cast<Plano3D*>(this));
-		}
+		plano2->puntosInternos.clear();
+		plano2->planosColindantes.clear();
+
+		//for (set<Plano3D*>::iterator it = plano2->planosColindantes.begin(); it != plano2->planosColindantes.end(); ++it){
+		//	(*it)->planosColindantes.erase(plano2);
+		//	(*it)->planosColindantes.insert(const_cast<Plano3D*>(this));
+		//}
 
 	}
 
-	float getDotProductPunto(Punto3D *punto2){
-		return abs(nx*punto2->getNX() + ny * punto2->getNY() + nz * punto2->getNZ());
+	float getDotProductPunto(Punto3D *punto){
+		return abs(nx*punto->getNX() + ny * punto->getNY() + nz * punto->getNZ());
+	}
+
+	float getDotProductPlano(Plano3D *plano){
+		return abs(nx*plano->getNX() + ny * plano->getNY() + nz * plano->getNZ());
+	}
+
+	float getDistanciaAPunto(Punto3D *punto){
+		return abs(nx * punto->getX() + ny * punto->getY() + nz * punto->getZ() + d) / divisorDistanciaPunto;
+	}
+
+	float getDistanciaAPuntoCentralDelPlano(Plano3D *plano){
+		return abs(nx * plano->cx + ny * plano->cy + nz * plano->cz + d) / divisorDistanciaPunto;
+	}
+
+	float getNDMenosND(Plano3D *plano2){
+		return abs(d - plano2->d);
+	}
+
+	float isColindante(Plano3D *plano2){
+		set<Plano3D*>::iterator col = planosColindantes.find(plano2);
+		return col != planosColindantes.end();
 	}
 
 };
