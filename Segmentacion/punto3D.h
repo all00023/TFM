@@ -21,13 +21,32 @@ private:
 	int etiqueta;
 	Plano3D* plano;
 	Elemento3D* elemento;
+	int auxiliarPuntosValidos;
 
 public:
 	Punto3D(){
 		plano = NULL;
 		elemento = NULL;
+		x = 0;
+		y = 0;
+		z = 0;
+		depth = 0;
+		valido = false;
+		normalValida = false;
+		etiqueta = 0;
 	}
 	~Punto3D(){}
+
+	int getPuntosValidos(){
+		return auxiliarPuntosValidos;
+	}
+
+	void addPuntoValido(float x, float y, float z){
+		valido = true;
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
 
 	bool getValido(){
 		return valido;
