@@ -2,7 +2,7 @@
 
 using namespace std;
 
-class Plano3D; 
+class Plano3D;
 class Elemento3D;
 
 class Punto3D{
@@ -39,7 +39,13 @@ public:
 	~Punto3D(){}
 
 	void calcularPunto(){
-		if (auxiliarPuntosValidos > 0){
+		if (auxiliarPuntosValidos == 1){
+			x = x;
+			y = y;
+			z = z;
+			valido = true;
+			calcularDepth();
+		} else if (auxiliarPuntosValidos > 1){
 			x = x / auxiliarPuntosValidos;
 			y = y / auxiliarPuntosValidos;
 			z = z / auxiliarPuntosValidos;
@@ -53,10 +59,10 @@ public:
 	}
 
 	void addPuntoValido(float x, float y, float z){
-		valido = true;
-		this->x = x;
-		this->y = y;
-		this->z = z;
+		this->x += x;
+		this->y += y;
+		this->z += z;
+		auxiliarPuntosValidos++;
 	}
 
 	bool getValido(){
@@ -99,7 +105,7 @@ public:
 	int getEtiqueta(){
 		return etiqueta;
 	}
-	
+
 	Plano3D* getPlano(){
 		return plano;
 	}
@@ -151,7 +157,7 @@ public:
 	void setEtiqueta(int etiqueta){
 		this->etiqueta = etiqueta;
 	}
-	
+
 	void setPlano(Plano3D* plano){
 		this->plano = plano;
 	}
