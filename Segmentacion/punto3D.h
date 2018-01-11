@@ -2,7 +2,8 @@
 
 using namespace std;
 
-class Plano3D;
+class Plano3D; 
+class Elemento3D;
 
 class Punto3D{
 
@@ -19,10 +20,12 @@ private:
 	float nd;
 	int etiqueta;
 	Plano3D* plano;
+	Elemento3D* elemento;
 
 public:
 	Punto3D(){
 		plano = NULL;
+		elemento = NULL;
 	}
 	~Punto3D(){}
 
@@ -71,6 +74,10 @@ public:
 		return plano;
 	}
 
+	Elemento3D* getElemento(){
+		return elemento;
+	}
+
 	void setValido(bool valido){
 		this->valido = valido;
 	}
@@ -117,6 +124,10 @@ public:
 	
 	void setPlano(Plano3D* plano){
 		this->plano = plano;
+	}
+
+	void setElemento(Elemento3D* elemento){
+		this->elemento = elemento;
 	}
 
 	void calcularND(){

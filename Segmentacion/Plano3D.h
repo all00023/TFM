@@ -3,43 +3,31 @@
 
 using namespace std;
 
-class Plano3D{
+class Plano3D: public Elemento3D{
 
 private:
-	int etiqueta;
 	bool valido;
 
 	double sumaNX;
 	double sumaNY;
 	double sumaNZ;
 
-	double sumaX;
-	double sumaY;
-	double sumaZ;
-
 	float nx;
 	float ny;
 	float nz;
 	float d;
 
-	float cx;
-	float cy;
-	float cz;
-
 	float depthCentro;
-
-	set<Punto3D*> puntosInternos;
 	set<Plano3D*> planosColindantes;
 
 	float divisorDistanciaPunto;
 
 public:
-	Plano3D(int etiqueta){
+	Plano3D(int etiqueta) : Elemento3D(etiqueta){
 		valido = false;
 		sumaNX = 0;
 		sumaNY = 0;
 		sumaNZ = 0;
-		this->etiqueta = etiqueta;
 	}
 
 	float getEtiqueta(){
@@ -71,14 +59,6 @@ public:
 		return planosColindantes;
 	}
 
-	void liberarPuntos(){
-		for (set<Punto3D*>::iterator it = puntosInternos.begin(); it != puntosInternos.end(); ++it){
-			(*it)->setPlano(NULL);
-			(*it)->setEtiqueta(0);
-		}
-	}
-
-
 	void addPunto(Punto3D *p){
 
 		sumaNX += p->getNX();
@@ -101,13 +81,12 @@ public:
 	}
 
 	void calcularParametrosDelPlano(){
+
+		calcularParametrosDelElemento();
+
 		nx = sumaNX / puntosInternos.size();
 		ny = sumaNY / puntosInternos.size();
 		nz = sumaNZ / puntosInternos.size();
-
-		cx = sumaX / puntosInternos.size();
-		cy = sumaY / puntosInternos.size();
-		cz = sumaZ / puntosInternos.size();
 
 		normalizarVectorNormal();
 

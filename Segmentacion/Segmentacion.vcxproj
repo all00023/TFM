@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Elemento3D.h" />
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="Plano3D.h" />
     <ClInclude Include="Punto3D.h" />
