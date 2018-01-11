@@ -34,8 +34,19 @@ public:
 		valido = false;
 		normalValida = false;
 		etiqueta = 0;
+		auxiliarPuntosValidos = 0;
 	}
 	~Punto3D(){}
+
+	void calcularPunto(){
+		if (auxiliarPuntosValidos > 0){
+			x = x / auxiliarPuntosValidos;
+			y = y / auxiliarPuntosValidos;
+			z = z / auxiliarPuntosValidos;
+			valido = true;
+			calcularDepth();
+		}
+	}
 
 	int getPuntosValidos(){
 		return auxiliarPuntosValidos;
