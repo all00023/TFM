@@ -22,6 +22,7 @@ private:
 	Plano3D* plano;
 	Elemento3D* elemento;
 	int auxiliarPuntosValidos;
+	int posicionOriginal;
 
 public:
 	Punto3D(){
@@ -35,7 +36,9 @@ public:
 		normalValida = false;
 		etiqueta = 0;
 		auxiliarPuntosValidos = 0;
+		posicionOriginal = 9999999999;
 	}
+
 	~Punto3D(){}
 
 	void calcularPunto(){
@@ -63,6 +66,22 @@ public:
 		this->y += y;
 		this->z += z;
 		auxiliarPuntosValidos++;
+	}
+
+	void addPuntoPosicion(float x, float y, float z, int pos){
+		this->x += x;
+		this->y += y;
+		this->z += z;
+		posicionOriginal = pos;
+		valido = true;
+	}
+
+	int getPosicionOriginal(){
+		return posicionOriginal;
+	}
+
+	void setPosicionOriginal(int pos){
+		posicionOriginal = pos;
 	}
 
 	bool getValido(){
